@@ -64,12 +64,12 @@ public class Principal {
                 "/" + codigoMarca + MODELOS + "/" + codigoNomeAutomovel + ANOS);
         List<DadosAutomovel> dadosNomeAutomovel = obterDados.obterLista(json, DadosAutomovel.class);
 
-        List<String> listaCodigosAnos = dadosAutomovel.stream()
+        List<String> listaCodigosAnos = dadosNomeAutomovel.stream()
                 .map(e -> e.codigo())
                     .collect(Collectors.toList());
 
 //        dadosNomeAutomovel.forEach(e -> System.out.println("Ano e tipo de combustível: (" +
-//                e.tipoDeCombustivelAno() + ")Codigo: " + e.codigo()));
+//                e.nome() + ")Codigo: " + e.codigo()));
 
         for (String codigoAno: listaCodigosAnos) {
             json = consumirApi.consumirApi(ENDERECO + tipoVeiculo.toLowerCase() + MARCAS +
@@ -78,8 +78,7 @@ public class Principal {
             listaAutomoveis.add(dadosAutomovelAnos);
         }
 
-        listaAutomoveis.stream()
-                .sorted(Comparator.comparing(DadosAutomovelAnos::anoCarro))
+        listaAutomoveis.stream().sorted(Comparator.comparing(DadosAutomovelAnos::anoCarro))
                 .forEach(t -> System.out.println("Marca: " + t.marcaCarro() + "\n" +
                         "Nome automovel: " + t.modeloCarro() + "\n" +
                         "Ano do automovel: " + t.anoCarro() + "\n" +
